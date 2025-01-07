@@ -72,6 +72,12 @@ elif command -v nowplaying-cli >/dev/null; then
   else
     DURATION=$(printf "%.0f" "${NPCLI_VALUES[duration]}")
     POSITION=$(printf "%.0f" "${NPCLI_VALUES[elapsedTime]}")
+    if [ "$STATUS" = "playing" ]; then
+      echo "$POSITION" >/tmp/last_position
+    fi
+    if [ "$STATUS" = "paused" ]; then
+      POSITION=$(cat /tmp/last_position)
+    fi
   fi
 fi
 
